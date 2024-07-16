@@ -4,9 +4,13 @@ const createPost = async () => {
  let createTable = `
   CREATE TABLE IF NOT EXISTS posts (
    id INT NOT NULL AUTO_INCREMENT,
+   userId INT NOT NULL,
    status VARCHAR(500),
    photo VARCHAR(500),
-   userId INT NOT NULL,
+   TIMESTAMP DEFAULT current_timestamp(),
+   likes INT DEFAULT 0, 
+   comments INT DEFAULT 0, 
+   bookmarks INT DEFAULT 0,
    PRIMARY KEY(id),
    FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
    INDEX(userId)
@@ -24,8 +28,8 @@ const createPost = async () => {
 
  try {
   const table = await sql.query(createTable);
-  const table1 = await sql.query(alterTable);
-  const table2 = await sql.query(addTime);
+  // const table1 = await sql.query(alterTable);
+  // const table2 = await sql.query(addTime);
   console.log("Posts Table created");
  } catch (error) {
   console.log("POST_TABLE_ERROR",error);

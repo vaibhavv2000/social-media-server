@@ -115,7 +115,7 @@ router.post("/login",async (req: Request,res: Response,next: NF) => {
       .json({user: n_user});
  } catch(error) {
   next(error);
- }
+ };
 });
 
 router.delete("/logout",isAuth,async (_: Request,res: Response,next: NF) => {

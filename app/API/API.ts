@@ -3,7 +3,11 @@ import {AuthRouter} from "./Auth";
 import {userRouter} from "./user";
 import isAuth from "./isAuth";
 import {uploadRouter} from "../config/upload";
-import {db_init} from "../db/dbInit";
+import {createUser} from "../db/user";
+import {createPost} from "../db/posts";
+import {createPostInteract} from "../db/postInteract";
+import {createNotifications} from "../db/notifications";
+import {createFollowing} from "../db/following";
 
 const router = Router();
 
@@ -13,13 +17,16 @@ router.use("/user",isAuth,userRouter);
 
 router.use("/upload",isAuth,uploadRouter);
 
-router.get("/initdb",async (req,res) => {
+router.get("/init-db",async (req,res) => {
  const init = req.query.init ? true : false;
 
  try {
-  const result = await db_init();
-  if(result) return res.status(201).json({message: "Database initialized"});
-  else return res.status(500).json({message: "Server error"});
+  await createUser();
+//   await createPost();
+//   await createPostInteract();
+//   await createNotifications();
+//   await createFollowing();
+  return res.status(201).json({message: "Database initialized"});
  } catch (error) {
   return res.status(500).json(error); 
  };

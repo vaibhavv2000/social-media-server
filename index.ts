@@ -18,7 +18,7 @@ app.use(helmet({
  crossOriginResourcePolicy: false,
 }));
 app.use(cors({
- origin: "*",
+ origin: ["http://localhost:3000"],
  credentials: true,
 }));
 app.use(morgan("tiny"));
@@ -43,9 +43,9 @@ const init = async () => {
    })
   );
 
-  // app.all("*",(_: Request,res: Response) => {
-  //  return res.status(404).json({message: "Not found"});
-  // });
+  app.all("*",(_: Request,res: Response) => {
+   return res.status(404).json({message: "Not found"});
+  });
 
   // error Handler
   app.use((err: Error,req: Request,res: Response,next: NextFunction) => {
