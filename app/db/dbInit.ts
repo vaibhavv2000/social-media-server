@@ -7,7 +7,7 @@ import {createUser} from "./user";
 
 const db_init = async () => {
  try {
-  await createDB();
+// await createDB();
   await createUser();
   await createPost();
   await createPostInteract();

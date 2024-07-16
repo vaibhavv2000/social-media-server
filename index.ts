@@ -15,11 +15,11 @@ const app: Application = express();
 app.use(express.json());
 
 app.use(helmet({
-  crossOriginResourcePolicy: false,
+ crossOriginResourcePolicy: false,
 }));
 app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true,
+ origin: "*",
+ credentials: true,
 }));
 app.use(morgan("tiny"));
 app.use(cookieParser());
