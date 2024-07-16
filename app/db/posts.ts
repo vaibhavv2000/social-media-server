@@ -28,7 +28,7 @@ const createPost = async () => {
   const table2 = await sql.query(addTime);
   console.log("Posts Table created");
  } catch (error) {
-  console.log(error);
+  console.log("POST_TABLE_ERROR",error);
  };
 };
 

@@ -17,8 +17,9 @@ router.get("/initdb",async (req,res) => {
  const init = req.query.init ? true : false;
 
  try {
-  await db_init(init);
-  return res.status(201).json({message: "Database initialized"});
+  const result = await db_init();
+  if(result) return res.status(201).json({message: "Database initialized"});
+  else return res.status(500).json({message: "Server error"});
  } catch (error) {
   return res.status(500).json(error); 
  };

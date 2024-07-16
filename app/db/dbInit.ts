@@ -5,17 +5,18 @@ import {createPostInteract} from "./postInteract";
 import {createPost} from "./posts";
 import {createUser} from "./user";
 
-const db_init = async (init = false) => {
+const db_init = async () => {
  try {
-  if(init) await createDB();
+  await createDB();
   await createUser();
   await createPost();
   await createPostInteract();
   await createNotifications();
   await createFollowing();
-  return;
+  return true;
  } catch(error) {
   console.log("DB_INITIALIZE_ERROR",error);
+  return false;
  };
 };
 

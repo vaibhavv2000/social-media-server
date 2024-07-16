@@ -19,7 +19,7 @@ const createNotifications = async () => {
   const table = await sql.query(createTable);
   console.log("Notifications Table created");
  } catch(error) {
-  console.log(error);
+  console.log("NOTIFICATION_TABLE_ERROR",error);
  };
 };
 

@@ -43,16 +43,16 @@ const init = async () => {
    })
   );
 
-  app.all("*",(_: Request,res: Response) => {
-   return res.status(404).json({message: "Not found"});
-  });
+  // app.all("*",(_: Request,res: Response) => {
+  //  return res.status(404).json({message: "Not found"});
+  // });
 
   // error Handler
   app.use((err: Error,req: Request,res: Response,next: NextFunction) => {
    return res.status(500).json({message: err.message});
   });
 
-  app.listen(9000,() => console.log(`Server running`));
+  app.listen(9000,() => console.log(`Server running on localhost:9000`));
  } catch(error) {
   if(error instanceof Error) console.log("Graphql error",error.message);
  }

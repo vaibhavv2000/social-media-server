@@ -8,7 +8,8 @@ const sql = createPool({
  database: process.env.DB_NAME,
 });
 
-sql.on("connection",() => {
+sql.on("connection",(err) => {
+ if(err) return console.log("ERROR======>",err);
  console.log("DB_CONNECTED");
 });
 

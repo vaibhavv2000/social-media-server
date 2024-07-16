@@ -15,7 +15,7 @@ const createFollowing = async () => {
   const table = await sql.query(createTable);
   console.log("Followings Table created");
  } catch(error) {
-  console.log(error);
+  console.log("FOLLOWING_TABLE_ERROR",error);
  };
 };
 

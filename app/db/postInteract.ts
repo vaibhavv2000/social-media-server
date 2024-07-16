@@ -33,7 +33,7 @@ const createPostInteract = async () => {
   const renameCommentCol = await sql.query(renameComment);
   console.log("Post Interact Table created");
  } catch(error) {
-  console.log(error);
+  console.log("POST_INTERACT_TABLE_ERROR",error);
  };
 };
 

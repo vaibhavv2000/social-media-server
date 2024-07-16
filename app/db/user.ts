@@ -59,8 +59,8 @@ const createUser = async () => {
   // const p7 = await sql.query(pro2);
   // const p8 = await sql.query(pro3);
   console.log("User Table created");
- } catch(error) {
-  console.log(error);
+ } catch(error: any) {
+  console.log("USER_TABLE_ERROR",error);
  };
 };
 
