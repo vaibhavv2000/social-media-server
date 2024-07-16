@@ -12,8 +12,7 @@ const sql = createPool({
  },
 });
 
-sql.on("connection",(err) => {
- if(err) return console.log("ERROR======>",err);
+sql.on("connection",() => {
  console.log("DB_CONNECTED");
 });
 

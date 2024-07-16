@@ -97,30 +97,29 @@ export const postResolver = {
     if(username) {
      const photos = await sql.execute(
       `SELECT photo, id as postId FROM posts 
-       WHERE photo != "" AND userId = (SELECT id FROM users WHERE username = ?)
+       WHERE photo != '' AND userId = (SELECT id FROM users WHERE username = ?)
        ORDER BY created_at`,
       [username]
      );
 
      return photos[0];
-    }
+    };
 
     if(explore) {
      const photos = await sql.execute(
-      `SELECT photo, id as postId FROM posts
-      WHERE photo != "" ORDER BY RAND() LIMIT 50 OFFSET ${skip}`
+      `SELECT photo, id as postId FROM posts WHERE photo != '' 
+       ORDER BY RAND() LIMIT 50 OFFSET ${skip}`
      );
 
      return photos[0];
     } else {
      const photos = await sql.execute(
-      `SELECT photo, id as postId FROM posts 
-      WHERE photo != "" ORDER BY RAND() LIMIT 6`
+      `SELECT photo, id as postId FROM posts WHERE photo != '' ORDER BY RAND() LIMIT 6`
      );
 
      return photos[0];
-    }
-   } catch(error) {
+    };
+   } catch(error:any) {
     if(error instanceof Error) throw new GraphQLError(error.message);
    }
   },

@@ -30,7 +30,7 @@ const removeImage = async (imgName: string) => {
  try {  
   await rm(`${imgPath}/${imgName}`);
  } catch(error) {
-  console.log(error);
+  console.log("REMOVE_IMAGE",error);
  };
 };
 

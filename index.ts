@@ -33,7 +33,7 @@ const init = async () => {
   app.use(
    "/graphql",
    cors<cors.CorsRequest>({
-    origin: "*",
+    origin: ["http://localhost:3000"],
     credentials: true,
    }),
    json(),
@@ -52,7 +52,7 @@ const init = async () => {
    return res.status(500).json({message: err.message});
   });
 
-  app.listen(9000,() => console.log(`Server running on localhost:9000`));
+  app.listen(9000);
  } catch(error) {
   if(error instanceof Error) console.log("Graphql error",error.message);
  }
