@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only index",
-    "webpack": "webpack --config ./webpack.config.js"
+    "dev": "ts-node-dev --respawn --transpile-only index"
   },
   "keywords": [],
   "author": "",
