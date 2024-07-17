@@ -18,7 +18,7 @@ app.use(helmet({
  crossOriginResourcePolicy: false,
 }));
 app.use(cors({
- origin: ["http://localhost:3000"],
+ origin: ["http://localhost:3000","https://social-media-client-148u.onrender.com"],
  credentials: true,
 }));
 app.use(morgan("tiny"));
@@ -33,7 +33,7 @@ const init = async () => {
   app.use(
    "/graphql",
    cors<cors.CorsRequest>({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000","https://social-media-client-148u.onrender.com"],
     credentials: true,
    }),
    json(),
