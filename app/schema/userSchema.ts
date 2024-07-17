@@ -62,8 +62,7 @@ export const userResolvers = {
    try {
     const [rows,data] = await sql.execute(
      `SELECT id, name, bio, email, username, posts, followers, followings, cover, profile 
-      FROM    
-      users WHERE username = ? LIMIT 1`,
+      FROM users WHERE username = ? LIMIT 1`,
      [username]
     ) as any;
 

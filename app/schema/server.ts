@@ -5,11 +5,11 @@ import {postResolver,postTypeDefs} from "./postSchema";
 import {notificationResolver,notificationTypeDefs} from "./notificationSchema";
 
 const apolloServer = new ApolloServer({
-  typeDefs: [userTypeDefs,postTypeDefs,notificationTypeDefs],
-  resolvers: merge({},userResolvers,postResolver,notificationResolver),
-  rootValue: {
-    name: "levi",
-  },
+ typeDefs: [userTypeDefs,postTypeDefs,notificationTypeDefs],
+ resolvers: merge({},userResolvers,postResolver,notificationResolver),
+ rootValue: {
+  name: "javascript",
+ },
 });
 
 export default apolloServer;

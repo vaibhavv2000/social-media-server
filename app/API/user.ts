@@ -29,7 +29,7 @@ router.get("/exploreposts",async (req: Request,res: Response,next: NF) => {
  try {
   const photos = await sql.execute(
    `SELECT photo, id as postId FROM posts
-    WHERE photo != "" OR userId != ? ORDER BY RAND() 
+    WHERE photo != '' OR userId != ? ORDER BY RAND() 
     LIMIT 50 OFFSET ${skip}`,
    [id]
   );

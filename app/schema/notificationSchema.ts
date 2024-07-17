@@ -3,31 +3,31 @@ import sql from "../config/sql";
 
 export const notificationTypeDefs = `#graphql
 
-  enum ACTIONTYPE {
-    LIKE
-    FOLLOW
-    COMMENT
-  }
+ enum ACTIONTYPE {
+  LIKE
+  FOLLOW
+  COMMENT
+ }
  
-  type notification {
-    action_type: ACTIONTYPE
-    toWhom: ID
-    byWhom: ID
-    postId: ID
-  }
+ type notification {
+  action_type: ACTIONTYPE
+  toWhom: ID
+  byWhom: ID
+  postId: ID
+ }
 
-  type msg {
-    msg: String
-  }
+ type msg {
+  msg: String
+ }
 
-  type Query {
-    get_notifications: [notification]
-  }
+ type Query {
+  get_notifications: [notification]
+ }
 
-  type Mutation {
-    new_notification(action_type: ACTIONTYPE!,postId: ID,userId: ID!): notification
-    delete_notification(action_type: ACTIONTYPE!,postId: ID,userId: ID!): msg
-  }
+ type Mutation {
+  new_notification(action_type: ACTIONTYPE!,postId: ID,userId: ID!): notification
+  delete_notification(action_type: ACTIONTYPE!,postId: ID,userId: ID!): msg
+ }
 `;
 
 export const notificationResolver = {
