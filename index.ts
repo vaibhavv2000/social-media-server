@@ -1,4 +1,4 @@
-import express,{Application,NextFunction,Request,Response} from "express";
+import express, {type Application} from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
@@ -6,23 +6,26 @@ import {expressMiddleware} from "@apollo/server/express4";
 import apolloServer from "./app/schema/server";
 import {json} from "body-parser";
 import cookieParser from "cookie-parser";
-import {API} from "./app/API/API";
-import isAuth from "./app/API/isAuth";
+import isAuth from "./app/middlewares/isAuth";
 import path from "path";
+import errorHandler from "./app/middlewares/errorHandler";
+import compression from "compression";
+import headerConfig from "./app/middlewares/headerConfig";
+import "dotenv/config";
+import {API} from "./app/routes/API";
+import {corsOptions} from "./app/utils/corsOptions";
 
 const app: Application = express();
 
 app.use(express.json());
-
-app.use(helmet({
- crossOriginResourcePolicy: false,
-}));
-app.use(cors({
- origin: ["http://localhost:3000","https://social-media-client-148u.onrender.com"],
- credentials: true,
-}));
+app.use(cors(corsOptions));
+app.use(headerConfig);
+app.use(helmet());
 app.use(morgan("tiny"));
 app.use(cookieParser());
+app.use(compression());
+app.disable("x-powered-by");
+app.set('trust proxy', 1);
 
 app.use("/images",express.static(path.join(process.cwd(),"/app/images")));
 app.use("/api",API);
@@ -38,24 +41,19 @@ const init = async () => {
    }),
    json(),
    isAuth,
-   expressMiddleware(apolloServer,{
+   expressMiddleware(apolloServer, {
     context: async ({req,res}) => ({user: res.locals.user}),
    })
   );
 
-  app.all("*",(_: Request,res: Response) => {
-   return res.status(404).json({message: "Not found"});
-  });
+  app.all("*",(_, res) => res.status(404).json({message: "Invalid API Route"}));
+  app.use(errorHandler);
 
-  // error Handler
-  app.use((err: Error,req: Request,res: Response,next: NextFunction) => {
-   return res.status(500).json({message: err.message});
-  });
-
-  app.listen(9000);
+  const server = app.listen(9000, () => console.log("Server Listening"));
+  process.on("SIGTERM", () => server.close(() => console.log("Server Closed")));
  } catch(error) {
-  if(error instanceof Error) console.log("Graphql error",error.message);
- }
-}
+  console.log("Graphql error", error);
+ };
+};
 
 init();

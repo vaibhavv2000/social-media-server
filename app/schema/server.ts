@@ -1,15 +1,16 @@
 import {ApolloServer} from "@apollo/server";
 import merge from "lodash/merge";
-import {userResolvers,userTypeDefs} from "./userSchema";
-import {postResolver,postTypeDefs} from "./postSchema";
-import {notificationResolver,notificationTypeDefs} from "./notificationSchema";
+import userTypeDefs from "./userSchema/userTypeDefs";
+import postTypeDefs from "./postSchema/postTypeDefs";
+import notificationTypeDefs from "./notificationShema/notificationTypeDefs";
+import userResolver from "./userSchema/userResolver";
+import postResolver from "./postSchema/postResolver";
+import notificationResolver from "./notificationShema/notificationResolver";
 
 const apolloServer = new ApolloServer({
- typeDefs: [userTypeDefs,postTypeDefs,notificationTypeDefs],
- resolvers: merge({},userResolvers,postResolver,notificationResolver),
- rootValue: {
-  name: "javascript",
- },
+ rootValue: {},
+ typeDefs: [userTypeDefs, postTypeDefs, notificationTypeDefs],
+ resolvers: merge({},userResolver, postResolver, notificationResolver),
 });
 
 export default apolloServer;

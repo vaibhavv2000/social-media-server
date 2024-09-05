@@ -1,9 +1,6 @@
-import {Router,Request,Response,NextFunction,} from "express";
 import {rm} from "fs/promises";
 import path from "path";
 import multer from "multer";
-
-const router: Router = Router();
 
 let imgPath = path.join(process.cwd(),"/app/images");
 
@@ -18,20 +15,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.post(
- "/upload",
- upload.single("file"),
- (_: Request,res: Response,next: NextFunction) => {
-   return res.status(201).json({message: "uploaded"});
- }
-);
-
 const removeImage = async (imgName: string) => {
- try {  
+ try {
   await rm(`${imgPath}/${imgName}`);
  } catch(error) {
-  console.log("REMOVE_IMAGE",error);
+  console.log("REMOVED_IMAGE",error);
  };
 };
 
-export {router as uploadRouter,removeImage};
+export {upload, removeImage};
