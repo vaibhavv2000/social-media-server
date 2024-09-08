@@ -39,7 +39,7 @@ const init = async () => {
   app.use(
    "/graphql",
    cors<cors.CorsRequest>({
-    origin: ["http://localhost:3000","https://social-media-client-148u.onrender.com"],
+    origin: ["http://localhost:5173","https://social-media-client-148u.onrender.com"],
     credentials: true,
    }),
    json(),

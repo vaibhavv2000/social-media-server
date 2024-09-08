@@ -4,10 +4,8 @@
 
 # This app is hosted on render.com
 
-<<<<<<< HEAD
-# If you got any queries, then you can contact me at vaibhavk1965@gmail.com or 9975564393
-=======
-# You can not run this app on your machine as .env file is not pushed and mySQL database is hosted on remote server
+# Github Link - https://github.com/vaibhavv2000/social-media-server
+
+# Official hosting - https://social-media-server-7z5e.onrender.com
 
 # If you got any queries, then you can contact me at vaibhavk1965@gmail.com or 9975564393
->>>>>>> 885d320cfc2eadb5fe321d43187c032ccf766869
