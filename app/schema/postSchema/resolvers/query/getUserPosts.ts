@@ -6,9 +6,13 @@ import {RowDataPacket} from "mysql2";
 const getUserPosts = async (_: null,args: {username: string},{user}: {user: user}) => {
  const {username} = args;
  const {id} = user;
-
+ 
+ let q = `SELECT p.*,u.name,u.username,u.profile FROM posts p 
+  INNER JOIN users u ON p.userId = u.id 
+  WHERE p.userId = (select id FROM users WHERE username = ?)`;
+  
  try {
-  const [rows] = await sql.query(`SELECT * FROM posts WHERE id = ?`,[username]) as RowDataPacket[];
+  const [rows] = await sql.query(q,[username]) as RowDataPacket[];
 
   let query = `SELECT liked FROM postinteract WHERE postId = ? AND userInteracted = ? AND (liked = true OR bookmarked = true)`;
 

@@ -5,13 +5,13 @@ const local = {
  host: "localhost",
  user: "root",
  database: "social",
- password: process.env.LOCAL_DB_PWD as string,
+ password: process.env.LOCAL_DB_PASSWORD,
 };
 
 const prod = {
  host: process.env.DB_HOST,
  user: process.env.DB_USER,
- password: process.env.DB_PWD,
+ password: process.env.DB_PASSWORD,
  port: 10758,
  database: process.env.DB_NAME,
  ssl: {

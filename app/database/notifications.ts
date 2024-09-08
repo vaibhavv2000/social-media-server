@@ -1,6 +1,6 @@
 import sql from "../config/sql";
 
-const createNotifications = async () => {
+const createNotificationsTable = async () => {
  let createTable = `
   CREATE TABLE IF NOT EXISTS notifications (
    id INT NOT NULL auto_increment,
@@ -9,9 +9,9 @@ const createNotifications = async () => {
    byWhom INT NOT NULL,
    postId INT NOT NULL,
    PRIMARY KEY (id),
-   FOREIGN KEY(toWhom) REFERENCES users(id) ON DELETE CASCADE,
-   FOREIGN KEY(byWhom) REFERENCES users(id) ON DELETE CASCADE,
-   FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE,
+   FOREIGN KEY(toWhom) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY(byWhom) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
    index(toWhom)
   )`;
 
@@ -23,4 +23,4 @@ const createNotifications = async () => {
  };
 };
 
-export default createNotifications;
+export default createNotificationsTable;

@@ -1,14 +1,14 @@
 import sql from "../config/sql";
 
-const createBookmark = async () => {
+const createBookmarkTable = async () => {
  let createTable = `
   CREATE TABLE IF NOT EXISTS bookmarks (
    id INT NOT NULL AUTO_INCREMENT,
    postId INT NOT NULL,
    bookmarkedBy INT NOT NULL,
    PRIMARY KEY (id),
-   FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE,
-   FOREIGN KEY(bookmarkedBy) REFERENCES users(id) ON DELETE CASCADE
+   FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY(bookmarkedBy) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
  )`;
 
  try {
@@ -19,4 +19,4 @@ const createBookmark = async () => {
  };
 };
 
-export default createBookmark;
+export default createBookmarkTable;

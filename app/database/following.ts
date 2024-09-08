@@ -1,14 +1,14 @@
 import sql from "../config/sql";
 
-const createFollowing = async () => {
+const createFollowingTable = async () => {
  let createTable = `
   CREATE TABLE IF NOT EXISTS followings (
    id INT NOT NULL auto_increment,
    followerId INT NOT NULL,
    followingId INT NOT NULL,
    PRIMARY KEY (id),
-   FOREIGN KEY(followerId) REFERENCES users(id) ON DELETE CASCADE,
-   FOREIGN KEY(followingId) REFERENCES users(id) ON DELETE CASCADE
+   FOREIGN KEY(followerId) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY(followingId) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
  )`;
 
  try {
@@ -19,4 +19,4 @@ const createFollowing = async () => {
  };
 };
 
-export default createFollowing;
+export default createFollowingTable;

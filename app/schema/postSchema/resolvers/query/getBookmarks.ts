@@ -6,7 +6,9 @@ import type {RowDataPacket} from "mysql2";
 const getBookmarks = async (_: null, __: null, {user: {id}}: {user: user}) => {
  try {
   const [rows] = await sql.query(
-   `SELECT * FROM posts WHERE id in (SELECT postId from bookmarks WHERE bookmarkedBy = ?)`,[id]
+   `SELECT p.*, u.name,u.username,u.profile FROM posts p
+    INNER JOIN users u ON p.userId = u.id
+    WHERE p.id in (SELECT postId from bookmarks WHERE bookmarkedBy = ?)`,[id]
   ) as RowDataPacket[];
 
   let query = `SELECT liked FROM postinteract WHERE postId = ? AND userInteracted = ? AND (liked = true OR bookmarked = true)`;
