@@ -8,6 +8,7 @@ let createTable = `
   comment VARCHAR(255) DEFAULT '',
   bookmarked BOOLEAN,
   userInteracted INT NOT NULL,
+  createdAt TIMESTAMP DEFAULT current_timestamp(),
   PRIMARY KEY(id),
   FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE,
   FOREIGN KEY(userInteracted) REFERENCES users(id) ON DELETE CASCADE

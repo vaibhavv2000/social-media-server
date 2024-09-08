@@ -9,7 +9,7 @@ const editPost = async (req: Request,res: Response,next: NextFunction) => {
  if(photo) values.splice(1, 0, photo);
 
  try {
-  await sql.execute(query, status);  
+  await sql.execute(query, values);
   return res.status(200).json({message: "Post updated"});
  } catch(error) {
   next(error);

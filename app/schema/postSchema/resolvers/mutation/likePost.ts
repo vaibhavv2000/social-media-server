@@ -3,7 +3,6 @@ import sql from "../../../../config/sql";
 import {user} from "../../../../utils/types";
 import {GraphQLError} from "graphql";
 
-
 const likePost = async (_: null,{postId}: {postId: number},context: {user: user}) => {
  const {id} = context.user;
  const pool = await sql.getConnection();
@@ -20,7 +19,7 @@ const likePost = async (_: null,{postId}: {postId: number},context: {user: user}
 
   if(isLiked) {
    await sql.execute(`UPDATE posts SET likes = likes - 1 WHERE id = ?`,[postId]);
-   const query = `DELETE FROM postInteract WHERE postId = ? AND userInteracted = ?`;
+   const query = `DELETE FROM postInteract WHERE postId = ? AND userInteracted = ? AND liked = true`;
    await sql.execute(query, [postId,id]);
  
    await pool.commit();

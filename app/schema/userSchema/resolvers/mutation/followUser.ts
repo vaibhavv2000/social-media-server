@@ -6,13 +6,13 @@ import {GraphQLError} from "graphql";
 const followUser = async (_: any,args: {userId: number},context: {user: user}) => {
  const {id} = context.user;
  const {userId} = args;
- 
+
  const pool = await sql.getConnection();
  
  try {
   await pool.beginTransaction();
   let query = `SELECT id FROM followings WHERE followerId = ? AND followingId = ?`;
-  const [rows] = await sql.execute(query, [id,userId]) as RowDataPacket[];
+  const [rows] = await sql.execute(query, [id, userId]) as RowDataPacket[];
  
   let isFollowing = rows[0];
  

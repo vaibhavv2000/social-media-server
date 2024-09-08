@@ -35,19 +35,19 @@ const userTypeDefs = `#graphql
   isFollowing: Boolean
  }
 
- type msg {
-  msg: String
+ type message {
+  message: String
  }
 
  type Query {
   getUser(username: String!): user_data
-  getRecommendedUsers(query: String): [User]
+  getRecommendedUsers(query: String): [user_data]
   getUserData: User
  }
 
  type Mutation {
   updateUser(name: String, username: String, email: String, password: String, bio: String, profile: String, cover: String): User
-  followUser(userId: ID!): msg
+  followUser(userId: ID!): message
  }
 `;
 

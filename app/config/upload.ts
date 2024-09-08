@@ -16,11 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 const removeImage = async (imgName: string) => {
- try {
-  await rm(`${imgPath}/${imgName}`);
- } catch(error) {
-  console.log("REMOVED_IMAGE",error);
- };
+ await rm(`${imgPath}/${imgName}`);
 };
 
 export {upload, removeImage};

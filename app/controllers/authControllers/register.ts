@@ -37,11 +37,11 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
    to: email,
    subject: "Account Creation",
    html: `
-    <h2>Code for creation of ply account</h2>
+    <h2>Code for creation of SocialApp Account</h2>
     <p>${code}</p>
     <br />
     <h3>Warning:</h3>
-    <p>This code will expire in 5 minutes</p>
+    <p>This code will expire in 10 minutes</p>
    `,
   });
 

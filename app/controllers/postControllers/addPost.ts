@@ -9,27 +9,17 @@ const addPost = async (req: Request,res: Response,next: NextFunction) => {
    
  try {
   await pool.beginTransaction();
+  const statement = `INSERT INTO posts (status, photo, userId) VALUES (?, ?, ?)`;
+  let query = `SELECT id, createdAt FROM posts WHERE id = LAST_INSERT_ID()`;
    
-  await sql.execute(
-   `INSERT INTO posts (status, photo, userId) VALUES (?,?,?)`,
-   [status,photo,id]
-  );
-   
-  const [rows] = await sql.execute(`SELECT LAST_INSERT_ID() as id`) as any;
+  await sql.execute(statement, [status,photo,id]);
+  const [rows] = await sql.execute(query) as RowDataPacket[];
   await sql.execute(`UPDATE users SET posts = posts + 1 WHERE id = ?`,[id])
   await pool.commit();
 
-  const postId = (rows as RowDataPacket[])[0].id;
-   
-  return res.status(201).json({
-       id: postId,
-       status,
-       photo,
-       userId: id,
-       likes: 0,
-       comments: 0,
-       bookmarks: 0,
-  });
+  const {id: postId, createdAt} = rows[0];
+
+  return res.status(201).json({id: postId, createdAt});
  } catch(error) {
   await pool.rollback();
   next(error);

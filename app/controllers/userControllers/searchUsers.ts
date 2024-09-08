@@ -5,19 +5,28 @@ import type {user} from "../../utils/types";
 
 const searchUsers = async (req: Request,res: Response,next: NextFunction) => {
  const {query} = req.query;
- const {username} = res.locals.user;
+ const {username, id} = res.locals.user;
 
  if(!query || !username) return res.status(400).json({message: "All fields are required"});
+ let statement = `SELECT id FROM followings WHERE followerId = ? AND followingId = ?`;
 
- let statement = `SELECT name, username, id FROM users 
-  WHERE name LIKE ? OR username LIKE ? LIMIT 10`;
+ const getUsers = async (rows: user[]) => {
+  return await Promise.all(rows.map(async (item: user) => {
+   const [rows] = await sql.query(statement, [id, item.id]) as RowDataPacket[];
+   let isFollowing = rows[0] ? true: false;
+   return {...item, isFollowing};
+  }))
+ };
 
  try {
-  const [rows] = await sql.query(statement, [`%${query}%`,`%${query}%`]);
-  const getUsers = ((rows as RowDataPacket[])[0] as user[]);
-  const users = getUsers.filter(item => item.username !== username);
+  let userQuery = `SELECT name, username, id, profile FROM users 
+    WHERE name LIKE ? OR username LIKE ? AND username != ? LIMIT 10`;  
   
-  return res.status(200).send(users);
+  const [rows] = await sql.query(userQuery, [`%${query}%`,`%${query}%`, id]) as RowDataPacket[];
+  const users = rows.filter((item: user) => item.username !== username);
+  const data = await getUsers(users);
+  
+  return res.status(200).send(data);
  } catch(error) {
   next(error);
  };

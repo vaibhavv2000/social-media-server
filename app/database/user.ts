@@ -13,6 +13,8 @@ const q1 = `
   profile VARCHAR(255), 
   cover VARCHAR(255),
   bio VARCHAR(1000),
+  createdAt TIMESTAMP DEFAULT current_timestamp(),
+  isLive BOOLEAN,
   PRIMARY KEY (id)
 )`;
 

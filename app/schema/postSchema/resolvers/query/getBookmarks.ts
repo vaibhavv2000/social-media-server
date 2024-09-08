@@ -1,14 +1,13 @@
 import {GraphQLError} from "graphql";
 import sql from "../../../../config/sql";
 import type {post, user} from "../../../../utils/types";
-import {RowDataPacket} from "mysql2";
+import type {RowDataPacket} from "mysql2";
 
-const getUserPosts = async (_: null,args: {username: string},{user}: {user: user}) => {
- const {username} = args;
- const {id} = user;
-
+const getBookmarks = async (_: null, __: null, {user: {id}}: {user: user}) => {
  try {
-  const [rows] = await sql.query(`SELECT * FROM posts WHERE id = ?`,[username]) as RowDataPacket[];
+  const [rows] = await sql.query(
+   `SELECT * FROM posts WHERE id in (SELECT postId from bookmarks WHERE bookmarkedBy = ?)`,[id]
+  ) as RowDataPacket[];
 
   let query = `SELECT liked FROM postinteract WHERE postId = ? AND userInteracted = ? AND (liked = true OR bookmarked = true)`;
 
@@ -32,4 +31,4 @@ const getUserPosts = async (_: null,args: {username: string},{user}: {user: user
  };
 };
 
-export default getUserPosts;
+export default getBookmarks;

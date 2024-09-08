@@ -7,12 +7,12 @@ const createPost = async () => {
    userId INT NOT NULL,
    status VARCHAR(500),
    photo VARCHAR(500),
-   likes INT DEFAULT 0, 
-   comments INT DEFAULT 0, 
+   likes INT DEFAULT 0,
+   comments INT DEFAULT 0,
    bookmarks INT DEFAULT 0,
-   created_at TIMESTAMP DEFAULT current_timestamp(),
+   createdAt TIMESTAMP DEFAULT current_timestamp(),
    PRIMARY KEY(id),
-   FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
+   FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
    INDEX(userId)
  )`;
 

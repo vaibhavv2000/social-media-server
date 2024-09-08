@@ -21,7 +21,7 @@ const forgotPassword = async (req: Request, res: Response, next: NextFunction) =
    html: `
     <h4>${code}</h4>
     <br />
-    <p>Password reset code, valid for only 5 minutes</p>
+    <p>Password reset code, valid for only 10 minutes</p>
    `,
   });
      

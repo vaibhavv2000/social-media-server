@@ -20,7 +20,7 @@ export interface post {
  likes: number; 
  comments: number; 
  bookmarks: number;
- created_at:string;
+ createdAt:string;
 };
 
 export interface followings {

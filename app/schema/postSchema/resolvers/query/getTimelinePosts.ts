@@ -19,14 +19,23 @@ const getTimelinePosts = async (_: null, args: null, context: {user: user}) => {
    [id,id]
   ) as RowDataPacket[];
 
-  let query = `SELECT * FROM postinteract WHERE postId = ? AND userInteracted = ?`;
- 
+  let query = `SELECT liked FROM postinteract WHERE postId = ? AND userInteracted = ? AND (liked = true OR bookmarked = true)`;
+
   const posts = await Promise.all(rows.map(async (item: post) => {
-   const [rows] = await sql.query(query,[item.id, id]) as RowDataPacket[];
-   return {...item, isLiked: rows[0] ? true: false};
+   const [rows] = await sql.query(query, [item.id, id]) as RowDataPacket[];
+   let isLiked = rows[0] ? true: false;
+   return {...item, isLiked};
   }));
 
-  return posts;
+  let statement = `SELECT id FROM bookmarks WHERE postId = ? AND bookmarkedBy = ?`;
+
+  const items = await Promise.all(posts.map(async (item: post) => {
+   const [rows]= await sql.query(statement, [item.id, id]) as RowDataPacket[];
+   let isBookmarked = rows[0] ? true: false;
+   return {...item, isBookmarked};
+  }))
+
+  return items;
  } catch(error: any) {
   throw new GraphQLError(error.message);
  }

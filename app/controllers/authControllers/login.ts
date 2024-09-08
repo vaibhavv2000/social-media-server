@@ -16,7 +16,6 @@ const login = async (req: Request,res: Response,next: NextFunction) => {
   const [rows] = await sql.execute(query, [user,user])as RowDataPacket[];
 
   const currentUser = rows[0] as user;
-  console.log("++++++++++++++", currentUser);
   if(!currentUser) {
    return res.status(404).json({message: "No user found with the given credentials"});  
   };

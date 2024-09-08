@@ -14,6 +14,9 @@ import headerConfig from "./app/middlewares/headerConfig";
 import "dotenv/config";
 import {API} from "./app/routes/API";
 import {corsOptions} from "./app/utils/corsOptions";
+import {createServer} from "http";
+import {Server} from "socket.io";
+import chatIO from "./app/sockets/chatIO";
 
 const app: Application = express();
 
@@ -49,8 +52,13 @@ const init = async () => {
   app.all("*",(_, res) => res.status(404).json({message: "Invalid API Route"}));
   app.use(errorHandler);
 
-  const server = app.listen(9000, () => console.log("Server Listening"));
-  process.on("SIGTERM", () => server.close(() => console.log("Server Closed")));
+  const server = createServer(app);
+  const io = new Server(server);
+
+  chatIO(io);
+
+  const host = server.listen(9000, () => console.log("Server Listening"));
+  process.on("SIGTERM", () => host.close(() => console.log("Server Closed")));
  } catch(error) {
   console.log("Graphql error", error);
  };

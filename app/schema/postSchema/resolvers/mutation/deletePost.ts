@@ -17,7 +17,7 @@ const deletePost  = async (_: any,args: args,context: {user: user}) => {
   await pool.beginTransaction();
   await sql.execute(`DELETE FROM posts WHERE id = ? AND userId = ?`,[postId,id]);
   await sql.execute(`UPDATE users SET posts = posts - 1 WHERE id = ?`,[id])
- 
+
   await pool.commit();
   if(photo) removeImage(photo);
   return {message: "Post deleted"};

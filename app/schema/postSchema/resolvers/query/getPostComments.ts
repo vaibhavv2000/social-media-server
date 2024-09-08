@@ -1,7 +1,7 @@
 import {GraphQLError} from "graphql";
 import sql from "../../../../config/sql";
 
-const getPostComments = async (_: any,{postId}: {postId: number}) => {
+const getPostComments = async (_: null,{postId}: {postId: number}) => {
  try {
   const [rows] = await sql.query(
    `SELECT p.id, postId, comment, userInteracted, username 
