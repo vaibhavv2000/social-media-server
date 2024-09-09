@@ -16,6 +16,6 @@ router.use("/post", isAuth, postRouter);
 
 router.use("/upload", isAuth, uploadRouter);
 
-router.post("/initdb", initDB);
+router.get("/initdb", initDB);
 
 export {router as API};
