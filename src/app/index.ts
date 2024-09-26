@@ -10,7 +10,7 @@ import compression from "compression";
 import "dotenv/config";
 import {createServer} from "http";
 import {Server} from "socket.io";
-import {corsOptions} from "../utils/corsOptions";
+import {corsOptions, graphQLCorsOptions} from "../utils/corsOptions";
 import headerConfig from "../middlewares/headerConfig";
 import {API} from "../routes/API";
 import apolloServer from "../schema/server";
@@ -39,15 +39,12 @@ const init = async () => {
   await apolloServer.start();
   app.use(
    "/graphql",
-   cors<cors.CorsRequest>({
-    origin: ["http://localhost:5173","https://social-media-client-148u.onrender.com"],
-    credentials: true,
-   }),
+   cors(graphQLCorsOptions),
    json(),
    isAuth,
    expressMiddleware(apolloServer, {
     context: async ({req,res}) => ({user: res.locals.user}),
-   })
+   }),
   );
 
   app.all("*",(_, res) => res.status(404).json({message: "Invalid API Route"}));
