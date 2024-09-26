@@ -23,6 +23,4 @@ const config = process.env.NODE_ENV === "dev" ? local : prod;
 
 const sql = createPool(config);
 
-sql.on("connection",() => console.log("DB_CONNECTED"));
-
 export default sql;

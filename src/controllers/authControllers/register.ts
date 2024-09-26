@@ -51,9 +51,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
    {expiresIn: "10m",}
   );
 
-  return res
-   .status(200)
-   .json({token});
+  return res.status(200).json({token});
  } catch(error) {
   next(error);
  };
