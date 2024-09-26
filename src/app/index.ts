@@ -3,22 +3,23 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import {expressMiddleware} from "@apollo/server/express4";
-import apolloServer from "./app/schema/server";
 import {json} from "body-parser";
 import cookieParser from "cookie-parser";
-import isAuth from "./app/middlewares/isAuth";
 import path from "path";
-import errorHandler from "./app/middlewares/errorHandler";
 import compression from "compression";
-import headerConfig from "./app/middlewares/headerConfig";
 import "dotenv/config";
-import {API} from "./app/routes/API";
-import {corsOptions} from "./app/utils/corsOptions";
 import {createServer} from "http";
 import {Server} from "socket.io";
-import chatIO from "./app/sockets/chatIO";
+import {corsOptions} from "../utils/corsOptions";
+import headerConfig from "../middlewares/headerConfig";
+import {API} from "../routes/API";
+import apolloServer from "../schema/server";
+import errorHandler from "../middlewares/errorHandler";
+import isAuth from "../middlewares/isAuth";
+import chatIO from "../sockets/chatIO";
 
 const app: Application = express();
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -30,7 +31,7 @@ app.use(compression());
 app.disable("x-powered-by");
 app.set('trust proxy', 1);
 
-app.use("/images",express.static(path.join(process.cwd(),"/app/images")));
+app.use("/images",express.static(path.join(process.cwd(),"/src/images")));
 app.use("/api",API);
 
 const init = async () => {
@@ -57,10 +58,10 @@ const init = async () => {
 
   chatIO(io);
 
-  const host = server.listen(9000, () => console.log("Server Listening"));
+  const host = server.listen(PORT, () => console.log(`> running on ${PORT}`));
   process.on("SIGTERM", () => host.close(() => console.log("Server Closed")));
  } catch(error) {
-  console.log("Graphql error", error);
+  throw new Error(`Graphql error: ${JSON.stringify(error)}`);
  };
 };
 
